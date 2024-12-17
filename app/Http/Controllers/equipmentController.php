@@ -62,7 +62,7 @@ class equipmentController extends Controller
             ->where('id', $validated['equipment_id'])
             ->decrement('available', $validated['quantity']);
     
-        return back()->with('success', 'Equipment borrowed successfully.');
+        return redirect()->back()->with('success', 'Equipment borrowed successfully.');
     }
     public function markAsReturned($id)
     {
@@ -128,5 +128,22 @@ class equipmentController extends Controller
         $result = DB::table('students')->where('id', $student)->delete();
 
         return redirect()->back()->with('success', 'Student deleted successfully');
+    }
+    public function addEquipment(Request $request)
+    {
+
+        // Insert new equipment using query builder
+        $result = DB::table('equipment')->insert([
+            'name' => $request->name,
+            'quantity' => $request->quantity,
+            'available' => $request->quantity,
+        ]);
+
+        // Return response
+        if ($result) {
+            return redirect()->back()->with('success', 'Equipment added successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to add equipment.');
+        }
     }
 }

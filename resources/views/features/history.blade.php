@@ -1,9 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
+    {{-- <x-slot name="header">
         <h2 class="header-title">
             {{ __('History') }}
         </h2>
-    </x-slot>
+    </x-slot> --}}
 
     <style>
         .container {
@@ -100,7 +100,7 @@
                     type="text" 
                     id="equipmentSearch" 
                     class="search-input" 
-                    placeholder="Search Equipment...">
+                    placeholder="Search...">
             </div>
 
             @if(is_null($history))

@@ -1,9 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
+    {{-- <x-slot name="header">
         <h2 class="header-title">
             {{ __('Equipments') }}
         </h2>
-    </x-slot>
+    </x-slot> --}}
     <div id="notification-dialog" class="notification">
         <span id="notification-message"></span>
     </div>
@@ -109,6 +109,36 @@
             background-color: #6e8d00;
         }
 
+        .assign-button3 {
+            padding: 8px 16px;
+            background-color: #b2e400;
+            color: #000000;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .assign-button3:hover {
+            background-color: #6e8d00;
+        }
+
+        .assign-button2 {
+            padding: 8px 16px;
+            background-color: #ff442b;
+            color: #000000;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .assign-button2:hover {
+            background-color: #c50505;
+        }
+
         .no-data {
             color: #718096;
             text-align: center;
@@ -124,11 +154,15 @@
 
 <div class="container">
     <div class="content-box">
-        <input type="text" id="equipmentSearch" class="search-input" placeholder="Search Equipment ...">
+        <input type="text" id="equipmentSearch" class="search-input" placeholder="Search...">
             @if(is_null($equipment))
                 <p>No Equipments.</p>
             @else
+            
                 <div class="table-container">
+                    <div class="flex justify-end mb-4">
+                        <button onclick="openAddEquipmentModal()" class="button button-blue assign-button3">Add Equipment</button>
+                    </div>
                     <table>
                         <thead>
                             <tr>
@@ -161,7 +195,30 @@
         </div>
     </div>
 </x-app-layout>
-
+<div id="add-equipment-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+        <h2 class="text-xl font-bold mb-4">Add Equipment</h2>
+        <form id="add-equipment-form" action="{{ route('equipment.add') }}" method="POST">
+            @csrf
+            <div class="mb-4">
+                <label for="equipment-name" class="block text-sm font-bold mb-2">Name:</label>
+                <input id="equipment-name" name="name" type="text" required class="w-full p-2 border rounded">
+            </div>
+            <div class="mb-4">
+                <label for="equipment-quantity" class="block text-sm font-bold mb-2">Quantity:</label>
+                <input id="equipment-quantity" name="quantity" type="number" min="1" required class="w-full p-2 border rounded">
+            </div>
+            {{-- <div class="mb-4">
+                <label for="equipment-available" class="block text-sm font-bold mb-2">Available:</label>
+                <input id="equipment-available" name="available" type="number" min="0" required class="w-full p-2 border rounded">
+            </div> --}}
+            <div class="flex justify-end">
+                <button type="button" onclick="closeAddEquipmentModal()" class="button button-red mr-2">Cancel</button>
+                <button type="submit" class="button button-blue" onclick="showNotification('Successfully Added')">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="modal-overlay" id="borrowModal">
     <div class="modal-content">
         <h3>Borrow Equipment</h3>
@@ -179,7 +236,7 @@
                     <p class="mt-4"><strong>Selected Student:</strong> <span id="selectedStudent">None</span></p>
                 </div>
                 <div class="btn">
-                    <button type="submit" class="assign-button2" id="borrowSubmit" onclick="showNotification()" disabled>Confirm</button>
+                    <button type="submit" class="assign-button" id="borrowSubmit" onclick="showNotification('Successfully Borrowed')" disabled>Confirm</button>
                     <button class="assign-button2" onclick="closeModal()">Cancel</button>
                 </div>
             </div>
@@ -211,6 +268,17 @@
 </div>
 
 <script>
+    const addEquipmentModal = document.getElementById('add-equipment-modal');
+
+    function openAddEquipmentModal() {
+        addEquipmentModal.classList.remove('hidden');
+        addEquipmentModal.style.display = 'flex';
+    }
+
+    function closeAddEquipmentModal() {
+        addEquipmentModal.classList.add('hidden');
+        addEquipmentModal.style.display = 'none';
+    }
     document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('borrowModal');
         const equipmentInput = document.getElementById('equipment_id');
@@ -288,12 +356,12 @@
             borrowSubmit.disabled = true;  
         };
     });
-    function showNotification() {
+    function showNotification(message) {
         const notificationDialog = document.getElementById('notification-dialog');
         const notificationMessage = document.getElementById('notification-message');
         
         // Set the message text
-        notificationMessage.textContent = "SUCCESSFULLY BORROWED";
+        notificationMessage.textContent = message;
 
         // Show the notification
         notificationDialog.classList.add('show');
@@ -306,6 +374,28 @@
 </script>
 
 <style>
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+    }
+
     .hidden {
             display: none;
         }

@@ -22,6 +22,8 @@ Route::get('/students', [equipmentController::class, 'viewStudents'])->middlewar
 Route::put('/student/{id}', [equipmentController::class, 'studentUpdate'])->name('studentUpdate.update');
 Route::put('/student', [equipmentController::class, 'addStudent'])->name('studentAdd.store');
 Route::delete('/student/{student}', [equipmentController::class, 'destroy'])->name('student.destroy');
+Route::post('/equipmentss', [equipmentController::class, 'addEquipment'])->name('equipment.add');
+Route::post('/borrow', [equipmentController::class, 'store'])->name('equipment.borrow');
 
 Route::get('/', function () {
     return view('welcome');

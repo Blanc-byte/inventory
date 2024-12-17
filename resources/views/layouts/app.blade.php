@@ -33,6 +33,7 @@
                 margin-left: 200px; /* Adjust to match sidebar width */
                 padding: 16px;
                 min-height: 100vh;
+                background-color: #194449;
             }
         </style>
     </head>
