@@ -66,14 +66,14 @@
             {{ __('Borrowed') }}
         </a>
 
-        <!-- History -->
-        <a href="{{ route('history') }}" class="nav-link {{ request()->routeIs('history') ? 'active' : '' }}">
-            {{ __('History') }}
-        </a>
-
         <!-- Students -->
         <a href="{{ route('students') }}" class="nav-link {{ request()->routeIs('students') ? 'active' : '' }}">
             {{ __('Students') }}
+        </a>
+
+        <!-- History -->
+        <a href="{{ route('history') }}" class="nav-link {{ request()->routeIs('history') ? 'active' : '' }}">
+            {{ __('History') }}
         </a>
 
         <!-- Log Out -->

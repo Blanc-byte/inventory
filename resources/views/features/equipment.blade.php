@@ -213,8 +213,8 @@
                 <input id="equipment-available" name="available" type="number" min="0" required class="w-full p-2 border rounded">
             </div> --}}
             <div class="flex justify-end">
-                <button type="button" onclick="closeAddEquipmentModal()" class="button button-red mr-2">Cancel</button>
-                <button type="submit" class="button button-blue" onclick="showNotification('Successfully Added')">Add</button>
+                <button type="button" onclick="closeAddEquipmentModal()" class="button button-red mr-2 btnn cancel">Cancel</button>
+                <button type="submit" class="button button-blue btnn add" onclick="showNotification('Successfully Added')">Add</button>
             </div>
         </form>
     </div>
@@ -374,6 +374,17 @@
 </script>
 
 <style>
+    .btnn{
+        padding: 5px 10px;
+        width: 100px;
+        border-radius: 10px;
+    }
+    .cancel{
+        background-color: #dd0000;
+    }
+    .add{
+        background-color: #6e8d00;
+    }
     .modal-overlay {
         position: fixed;
         top: 0;
